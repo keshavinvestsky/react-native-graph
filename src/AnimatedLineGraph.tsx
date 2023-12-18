@@ -421,16 +421,23 @@ export function AnimatedLineGraph({
     ]
   )
 
-  useAnimatedReaction(
-    () => x.value,
-    (fingerX) => {
-      if (isActive.value || fingerX) {
-        setFingerX(fingerX)
-        runOnJS(setFingerPoint)(fingerX)
-      }
-    },
-    [isActive, setFingerX, width, x]
-  )
+  useEffect(() => {
+    if (isActive.value || x.value) {
+      setFingerX(x.value)
+      runOnJS(setFingerPoint)(x.value)
+    }
+  }, [isActive.value, setFingerPoint, setFingerX, x.value])
+
+  // useAnimatedReaction(
+  //   () => x.value,
+  //   (fingerX) => {
+  //     if (isActive.value || fingerX) {
+  //       setFingerX(fingerX)
+  //       runOnJS(setFingerPoint)(fingerX)
+  //     }
+  //   },
+  //   [isActive, setFingerX, width, x]
+  // )
 
   useAnimatedReaction(
     () => isActive.value,
